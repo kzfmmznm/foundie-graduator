@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import PreloaderScene from './scenes/PreloaderScene'
+import AssetDownloaderScene from './scenes/AssetDownloaderScene'
+import MainScene from './scenes/MainScene'
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -14,9 +15,7 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: true,
     },
   },
-  scene: [PreloaderScene],
+  scene: [AssetDownloaderScene, MainScene],
 }
 
-const game = new Phaser.Game(config)
-
-export default game
+new Phaser.Game(config)
