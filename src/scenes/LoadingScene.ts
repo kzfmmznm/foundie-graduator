@@ -39,8 +39,8 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio('minigame-bgm', 'assets/bgm/minigame.mp3')
     this.load.audio('ending-bgm', 'assets/bgm/ending.mp3')
     // Loading maps
-    this.load.image('map', '/assets/img/map.png')
-    this.load.image('tileset', '/assets/map/tileset.png')
+    this.load.image('map', 'assets/img/map.png')
+    this.load.image('tileset', 'assets/map/tileset.png')
     // this.load.tilemapTiledJSON('map', '/assets/map/base_tiles.json')
 
     // Loading dummy images
