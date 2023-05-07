@@ -48,7 +48,7 @@ export default class LoadingScene extends Phaser.Scene {
     // Loading map related files
     this.load.image('map', 'assets/img/map.png')
     this.load.image('tiles', 'assets/map/tileset.png')
-    this.load.tilemapTiledJSON('map', '/assets/map/kaplan.json')
+    this.load.tilemapTiledJSON('map', 'assets/map/kaplan.json')
 
     // Loading dummy images
     for (let i = 0; i < 1000; i++) {
