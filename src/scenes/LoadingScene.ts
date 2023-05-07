@@ -46,7 +46,6 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio('ending-bgm', 'assets/bgm/ending.mp3')
     this.load.audio('space-sound-effect', 'assets/bgm/space_se.mp3')
     // Loading map related files
-    this.load.image('map', 'assets/img/map.png')
     this.load.image('tiles', 'assets/map/tileset.png')
     this.load.tilemapTiledJSON('map', 'assets/map/kaplan.json')
 
