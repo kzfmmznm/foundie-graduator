@@ -1,9 +1,12 @@
 import Phaser from 'phaser'
+
 import LoadingScene from './scenes/LoadingScene'
 import TitleScene from './scenes/TitleScene'
 import OnboardingScene from './scenes/OnboardingScene'
 import FacultyAScene from './scenes/FacultyAScene'
 import MinigameAScene from './scenes/MinigameAScene'
+import FacultyBScene from './scenes/FacultyBScene'
+import MinigameBScene from './scenes/MinigameBScene'
 import EndingScene from './scenes/EndingScene'
 import MainScene from './scenes/MainScene'
 
@@ -16,9 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
   backgroundColor: '#FFFFFF',
   physics: {
     default: 'arcade',
-    arcade: {
-      // debug: true,
-    },
+    arcade: {},
   },
   scene: [
     LoadingScene,
@@ -27,8 +28,10 @@ const config: Phaser.Types.Core.GameConfig = {
     MainScene,
     FacultyAScene,
     MinigameAScene,
+    FacultyBScene,
+    MinigameBScene,
     EndingScene,
   ],
 }
 
-new Phaser.Game(config)
+const game = new Phaser.Game(config)

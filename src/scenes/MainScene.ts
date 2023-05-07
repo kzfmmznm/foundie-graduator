@@ -1,18 +1,21 @@
 export default class MainScene extends Phaser.Scene {
-  player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
-  faculty_a!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  private FRAME_RATE = 2
+
+  private player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  private faculty_a!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+  private faculty_b!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody
+
   private map!: Phaser.Tilemaps.Tilemap
+  private tileset!: Phaser.Tilemaps.Tileset
   private layer!: Phaser.Tilemaps.TilemapLayer
   private bgm!: Phaser.Sound.BaseSound
-  private upKey!: Phaser.Input.Keyboard.Key | null
-  private leftKey!: Phaser.Input.Keyboard.Key | null
-  private downKey!: Phaser.Input.Keyboard.Key | null
-  private rightKey!: Phaser.Input.Keyboard.Key | null
-  private spacebar!: Phaser.Input.Keyboard.Key | null
 
-  private FRAME_RATE = 2
-  // map!: Phaser.Tilemaps.Tilemap
-  // tileset!: Phaser.Tilemaps.Tileset | null
+  // Operations are done through WASD keys and SPACE key
+  private upKey!: Phaser.Input.Keyboard.Key
+  private leftKey!: Phaser.Input.Keyboard.Key
+  private downKey!: Phaser.Input.Keyboard.Key
+  private rightKey!: Phaser.Input.Keyboard.Key
+  private spacebar!: Phaser.Input.Keyboard.Key
 
   constructor() {
     super({ key: 'MainScene' })
@@ -22,17 +25,24 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     this.cameras.main.fadeIn(1000, 0, 0, 0)
-    this.add.image(400, 300, 'map')
 
-    this.bgm = this.sound.add('map-bgm')
-    this.bgm.play()
-    this.faculty_a = this.physics.add.sprite(600, 200, 'faculty-a-icon')
+    // Make map from tilemaps
+    const map = this.make.tilemap({ key: 'map' })
+    const tileset = map.addTilesetImage('tileset', 'tiles')
+    this.layer = map.createLayer('ground', tileset, 0, 0)
+    this.layer?.setCollisionByProperty({ collides: true })
+
+    // Locate static and dynami characters
+    let staticGroup = this.physics.add.staticGroup()
+    this.faculty_a = staticGroup.create(48, 528, 'faculty-a-icon')
+    this.faculty_b = staticGroup.create(528, 80, 'faculty-b-icon')
     this.player = this.physics.add.sprite(400, 300, 'main-player')
 
-    // Creating map with tilemap
-    // const map = this.make.tilemap({ key: 'map' })
-    // const tiles = map.addTilesetImage('standard_tiles', 'tilset')
-    // map.createLayer('ground', tiles)
+    // Set collisions
+    this.player.setCollideWorldBounds(true)
+    this.physics.add.collider(this.player, this.layer)
+    this.physics.add.collider(this.player, this.faculty_a)
+    this.physics.add.collider(this.player, this.faculty_b)
 
     // Keys used in this scene
     this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
@@ -43,7 +53,11 @@ export default class MainScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE,
     )
 
-    // Define animation of main player
+    // Play music
+    this.bgm = this.sound.add('map-bgm')
+    this.bgm.play()
+
+    // Set animations of main player
     this.anims.create({
       key: 'up',
       frames: this.anims.generateFrameNumbers('main-player', {
@@ -89,13 +103,9 @@ export default class MainScene extends Phaser.Scene {
       frameRate: this.FRAME_RATE,
       repeat: -1,
     })
-    // this.load.image('tileset', 'assets/map/tileset.png')
-    // this.load.tilemapTiledJSON('map', 'assets/map/foundie-graduator.json')
-
-    // this.tileset = this.map.addTilesetImage('map', 'tileset')
   }
 
-  update(time: number, delta: number) {
+  update() {
     if (this.upKey.isDown) {
       this.player.setVelocityY(-100)
       this.player.anims.play('up', true)
@@ -116,14 +126,30 @@ export default class MainScene extends Phaser.Scene {
 
     if (
       this.spacebar.isDown &&
+      // If distance between main player and faculty is close enough
       Math.sqrt(
         Math.pow(this.player.y - this.faculty_a.y, 2) +
           Math.pow(this.player.x - this.faculty_a.x, 2),
       ) < 50
     ) {
+      this.sound.play('space-sound-effect')
       this.bgm.stop()
       this.cameras.main.fadeOut(1200, 0, 0, 0)
       this.scene.start('FacultyAScene')
+    }
+
+    if (
+      this.spacebar.isDown &&
+      // If distance between main player and faculty is close enough
+      Math.sqrt(
+        Math.pow(this.player.y - this.faculty_b.y, 2) +
+          Math.pow(this.player.x - this.faculty_b.x, 2),
+      ) < 50
+    ) {
+      this.sound.play('space-sound-effect')
+      this.bgm.stop()
+      this.cameras.main.fadeOut(1200, 0, 0, 0)
+      this.scene.start('FacultyBScene')
     }
   }
 }

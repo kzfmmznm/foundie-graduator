@@ -12,14 +12,14 @@ export default class OnboardingScene extends Phaser.Scene {
     this.spacebar = this.input.keyboard.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE,
     )
+
+    /* Display faculty image, text explanation,
+    and then play BGM */
     this.add.image(400, 300, 'ending')
-    // Play ending music
-    this.bgm = this.sound.add('ending-bgm')
-    this.bgm.play()
     this.add.text(
       130,
-      380,
-      'Congraturations!!!\n\nNow, you have solved all of the assignments from the faculties\nand finished our foundation course.\n\nHowever, you would need to remoemver that\nthis is just the first step to becoming a great designer.\nI look forward to your further improvement in the next semester!',
+      370,
+      'Congraturations!!!\n\nNow, you have solved all of the assignments from the faculties\nand finished our foundation course.\n\nHowever, you would need to remoemver that\nthis is just the first step to becoming a great designer.\nI look forward to your further improvement in the next semester!\n\nPush SPACE key to go back to the title screen.',
       {
         fontFamily: 'Helvetica Neue',
         fontSize: '18px',
@@ -28,9 +28,11 @@ export default class OnboardingScene extends Phaser.Scene {
         color: 'white',
       },
     )
+    this.bgm = this.sound.add('ending-bgm')
+    this.bgm.play()
   }
 
-  update(time: number, delta: number) {
+  update() {
     if (this.spacebar.isDown) {
       this.bgm.stop()
       this.cameras.main.fadeOut(1200, 0, 0, 0)

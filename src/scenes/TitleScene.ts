@@ -12,6 +12,8 @@ export default class TitleScene extends Phaser.Scene {
       Phaser.Input.Keyboard.KeyCodes.SPACE,
     )
 
+    /* Display title background image,
+    and then title and instruction */
     this.cameras.main.fadeIn(1000, 0, 0, 0)
     this.add.image(400, 300, 'title-background')
     this.add
@@ -24,7 +26,6 @@ export default class TitleScene extends Phaser.Scene {
         strokeThickness: 3,
       })
       .setOrigin(0.5)
-
     this.add
       .text(400, 400, 'Press SPACE key to start game', {
         fontFamily: 'Helvetica Neue',
@@ -37,6 +38,7 @@ export default class TitleScene extends Phaser.Scene {
 
   update() {
     if (this.spacebar.isDown) {
+      this.sound.play('space-sound-effect')
       this.cameras.main.fadeOut(1200, 0, 0, 0)
       this.scene.start('OnboardingScene')
     }

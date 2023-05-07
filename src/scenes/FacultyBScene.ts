@@ -1,9 +1,9 @@
-export default class FacultyAScene extends Phaser.Scene {
+export default class FacultyBScene extends Phaser.Scene {
   private spacebar!: Phaser.Input.Keyboard.Key
   private bgm!: Phaser.Sound.BaseSound
 
   constructor() {
-    super({ key: 'FacultyAScene' })
+    super({ key: 'FacultyBScene' })
   }
 
   preload() {}
@@ -16,11 +16,11 @@ export default class FacultyAScene extends Phaser.Scene {
     /* Display faculty image, text explanation,
     and then play BGM */
     this.cameras.main.fadeIn(1000, 0, 0, 0)
-    this.add.image(400, 300, 'faculty-a')
+    this.add.image(400, 300, 'faculty-b')
     this.add.text(
       150,
       370,
-      'Well you found me!\nI expect you to solve my assignment here.\nThat is ...\n"IMAGE TRACING".\n\nPlease use mouse and trace the figure of FLOWER in canvas.\nYou need to take good score to pass this assignment\n\nThen, Let\'s go!!!',
+      'Well you found me!\nI expect you to solve my assignment here.\nThat is ...\n"IMAGE TRACING".\n\nPlease use mouse and trace the figure of VASE in canvas.\nYou need to take good score to pass this assignment\n\nThen, Let\'s go!!!',
       {
         fontFamily: 'Helvetica Neue',
         fontSize: '18px',
@@ -38,7 +38,7 @@ export default class FacultyAScene extends Phaser.Scene {
       this.sound.play('space-sound-effect')
       this.bgm.stop()
       this.cameras.main.fadeOut(1200, 0, 0, 0)
-      this.scene.start('MinigameAScene')
+      this.scene.start('MinigameBScene')
     }
   }
 }
