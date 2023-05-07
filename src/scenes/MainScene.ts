@@ -29,7 +29,7 @@ export default class MainScene extends Phaser.Scene {
     // Make map from tilemaps
     this.map = this.make.tilemap({ key: 'map' })
     this.tileset = this.map.addTilesetImage('tileset', 'tiles')
-    this.layer = this.map.createLayer('ground', tileset, 0, 0)
+    this.layer = this.map.createLayer('ground', this.tileset, 0, 0)
     this.layer?.setCollisionByProperty({ collides: true })
 
     // Locate static and dynami characters
