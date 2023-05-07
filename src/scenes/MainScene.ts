@@ -27,9 +27,9 @@ export default class MainScene extends Phaser.Scene {
     this.cameras.main.fadeIn(1000, 0, 0, 0)
 
     // Make map from tilemaps
-    const map = this.make.tilemap({ key: 'map' })
-    const tileset = map.addTilesetImage('tileset', 'tiles')
-    this.layer = map.createLayer('ground', tileset, 0, 0)
+    this.map = this.make.tilemap({ key: 'map' })
+    this.tileset = this.map.addTilesetImage('tileset', 'tiles')
+    this.layer = this.map.createLayer('ground', tileset, 0, 0)
     this.layer?.setCollisionByProperty({ collides: true })
 
     // Locate static and dynami characters
